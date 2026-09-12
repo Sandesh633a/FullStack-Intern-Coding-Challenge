@@ -16,9 +16,25 @@ const ownerRoutes = require('./modules/owner/owner.routes');
 const app = express();
 
 app.use(helmet());
+const allowedOrigins = clientUrl
+  ? clientUrl.split(',').map((u) => u.trim().replace(/\/$/, ''))
+  : ['http://localhost:5173', 'http://localhost:3000'];
+
 app.use(
   cors({
-    origin: clientUrl,
+    origin: (origin, callback) => {
+      if (!origin) return callback(null, true);
+      const cleanOrigin = origin.replace(/\/$/, '');
+      if (
+        allowedOrigins.includes(cleanOrigin) ||
+        allowedOrigins.includes('*') ||
+        /\.vercel\.app$/.test(new URL(origin).hostname) ||
+        nodeEnv === 'development'
+      ) {
+        return callback(null, true);
+      }
+      return callback(null, true);
+    },
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
@@ -30,6 +46,15 @@ app.use(express.urlencoded({ extended: true }));
 if (nodeEnv !== 'test') {
   app.use(morgan(nodeEnv === 'development' ? 'dev' : 'combined'));
 }
+
+app.get('/', (req, res) => {
+  res.status(200).json({
+    success: true,
+    message: 'Store Rating API is live and running',
+    environment: nodeEnv,
+    health: '/health',
+  });
+});
 
 app.get('/health', (req, res) => {
   res.status(200).json({

@@ -3,9 +3,7 @@ const ApiError = require('../utils/ApiError');
 
 
 const errorHandler = (err, req, res, next) => {
-  if (nodeEnv === 'development') {
-    console.error('Error:', err);
-  }
+  console.error('API Error:', err);
 
   if (err instanceof ApiError) {
     const response = {

@@ -15,16 +15,20 @@ const query = async (strings, ...values) => {
 };
 
 /**
- * Execute a parameterized query using $1, $2, ... placeholders.
- * @neondatabase/serverless sql.query() returns a plain array.
- * We wrap it in {rows} to match the pg-style interface used across services.
  * @param {string} text - SQL query string
  * @param {Array} params - query parameters
  * @returns {{ rows: Array }}
  */
 const queryRaw = async (text, params = []) => {
   try {
-    const rows = await sql.query(text, params);
+    let rows;
+    if (typeof sql.query === 'function') {
+      rows = await sql.query(text, params);
+    } else if (typeof sql === 'function') {
+      rows = await sql(text, params);
+    } else {
+      throw new Error('Neon database client is not properly initialized');
+    }
     return { rows: Array.isArray(rows) ? rows : [] };
   } catch (error) {
     console.error('Database query error:', error);
