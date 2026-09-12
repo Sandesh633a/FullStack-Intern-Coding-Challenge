@@ -1,5 +1,18 @@
 # StoreRating
 
+Live Demo
+Application	Deployment	Link
+Frontend	Vercel	https://full-stack-intern-coding-challenge-wine.vercel.app
+Backend API	Render	https://fullstack-intern-coding-challenge-ueqt.onrender.com
+
+Try the Application
+
+Open StoreRating — Live Frontend
+
+Open Backend API
+
+Note: The frontend is deployed on Vercel and communicates with the Express.js backend deployed on Render.
+
 > A full-stack store rating platform with role-based access for administrators, store owners, and customers.
 
 StoreRating is a responsive web application that allows authenticated users to discover stores, view aggregate ratings, and submit or update their own 1–5 star rating.
