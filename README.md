@@ -1,15 +1,14 @@
 # StoreRating
 
 Live Demo
+
 Application	Deployment	Link
+
 Frontend	Vercel	https://full-stack-intern-coding-challenge-wine.vercel.app
+
 Backend API	Render	https://fullstack-intern-coding-challenge-ueqt.onrender.com
 
-Try the Application
 
-Open StoreRating — Live Frontend
-
-Open Backend API
 
 Note: The frontend is deployed on Vercel and communicates with the Express.js backend deployed on Render.
 
